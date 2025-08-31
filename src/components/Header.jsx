@@ -1,7 +1,15 @@
 import React from 'react';
 import { PhoneIcon, LocationIcon, WrenchIcon } from './Icons';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <header className="bg-white shadow-md">
       {/* Top Bar */}
@@ -30,12 +38,24 @@ const Header = () => {
             <p className="text-sm text-gray-600 font-medium m-0 font-poppins">Expert Motor Repair</p>
           </div>
         </div>
-        <ul className="flex list-none m-0 p-0 gap-4 md:gap-8">
-          <li><a href="/" className="text-gray-800 font-medium px-4 py-2 rounded-md transition-all duration-300 hover:bg-starbike-blue hover:text-white active:bg-starbike-blue active:text-white">Home</a></li>
+        <ul className="flex list-none m-0 p-0 gap-4 md:gap-8 items-center">
+          <li><Link to="/" className="text-gray-800 font-medium px-4 py-2 rounded-md transition-all duration-300 hover:bg-starbike-blue hover:text-white active:bg-starbike-blue active:text-white">Home</Link></li>
           <li><a href="/services" className="text-gray-800 font-medium px-4 py-2 rounded-md transition-all duration-300 hover:bg-starbike-blue hover:text-white">Services</a></li>
           <li><a href="/book" className="text-gray-800 font-medium px-4 py-2 rounded-md transition-all duration-300 hover:bg-starbike-blue hover:text-white">Book Now</a></li>
           <li><a href="/about" className="text-gray-800 font-medium px-4 py-2 rounded-md transition-all duration-300 hover:bg-starbike-blue hover:text-white">About</a></li>
           <li><a href="/contact" className="text-gray-800 font-medium px-4 py-2 rounded-md transition-all duration-300 hover:bg-starbike-blue hover:text-white">Contact</a></li>
+          <li>
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="text-gray-800 font-medium px-4 py-2 rounded-md transition-all duration-300 hover:bg-starbike-blue hover:text-white active:bg-starbike-blue active:text-white focus:outline-none focus:ring-2 focus:ring-starbike-blue focus:ring-opacity-50"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" className="text-gray-800 font-medium px-4 py-2 rounded-md transition-all duration-300 hover:bg-starbike-blue hover:text-white active:bg-starbike-blue active:text-white">Login</Link>
+            )}
+          </li>
         </ul>
       </nav>
     </header>
